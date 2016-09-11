@@ -1,0 +1,19 @@
+---
+## when Ansible 2.2.0 released: use lxd_container module
+
+- block:
+    - name: stop and publish lxc instance {{ guest }}
+      shell: "{{ item }}"
+      with_items:
+        - "lxc stop {{ guest }} --force"
+        - "lxc publish {{ guest }} --alias {{ publishalias }}"
+        - "lxc delete {{ guest }}"
+      delegate_to: "{{ lxd_host }}"
+      when: lxclist.stdout.find(" {{ guest }} ") != -1
+  when: imagelist.stdout.find(" {{ publishalias }} ") == -1
+
+
+
+
+
+

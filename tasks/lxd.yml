@@ -1,0 +1,20 @@
+---
+
+- name: list existing lxc images
+  command: "lxc image list"
+  changed_when: false
+  register: imagelist
+  delegate_to: "{{ lxd_host }}"
+
+- name: list existing lxc instances
+  command: "lxc list"
+  changed_when: false
+  register: lxclist
+  delegate_to: "{{ lxd_host }}"
+
+- name: stop and publish lxc images
+  include: "lxd-stop-publish.yml imagelist={{ imagelist }} lxclist={{ lxclist }} guest={{ outer_item.guest }} publishalias={{ outer_item.publishalias }}"
+  with_items: "{{ lxd_publish }}"
+  loop_control:
+    loop_var: outer_item
+

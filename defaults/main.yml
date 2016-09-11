@@ -1,0 +1,11 @@
+---
+
+## default is current host if role is executed on lxd host
+##  but could be on a guest if defining host here.
+lxd_host: "{{ inventory_hostname }}"
+#lxd_publish:
+#lxd_publish: [
+#        { guest: 'default-ubuntu-1604', publishalias: 'ubuntu-16.04' },
+#        { guest: 'default-centos-7', publishalias: 'centos-7' }
+#    ]
+
