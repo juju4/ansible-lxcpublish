@@ -1,16 +1,32 @@
 ---
 
-- name: list existing lxc images
-  command: "lxc image list"
-  changed_when: false
-  register: imagelist
-  delegate_to: "{{ lxd_host }}"
+- debug: msg="lxd host is {{ lxd_host }}"
 
-- name: list existing lxc instances
-  command: "lxc list"
-  changed_when: false
-  register: lxclist
-  delegate_to: "{{ lxd_host }}"
+- block:
+    - name: list existing lxc images
+      command: "lxc image list"
+      changed_when: false
+      register: imagelist
+
+    - name: list existing lxc instances
+      command: "lxc list"
+      changed_when: false
+      register: lxclist
+  when: not (lxd_host is defined and lxd_host != '' and lxd_host != 'localhost')
+
+- block:
+    - name: list existing lxc images
+      command: "lxc image list"
+      changed_when: false
+      register: imagelist
+      delegate_to: "{{ lxd_host }}"
+
+    - name: list existing lxc instances
+      command: "lxc list"
+      changed_when: false
+      register: lxclist
+      delegate_to: "{{ lxd_host }}"
+  when: lxd_host is defined and lxd_host != '' and lxd_host != 'localhost'
 
 - name: stop and publish lxc images
   include: "lxd-stop-publish.yml imagelist={{ imagelist }} lxclist={{ lxclist }} guest={{ outer_item.guest }} publishalias={{ outer_item.publishalias }}"

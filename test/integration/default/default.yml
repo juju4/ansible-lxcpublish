@@ -5,5 +5,5 @@
 #  vars:
 #    - a:
   roles:
-    - lxcpublish
+    - juju4.lxcpublish
 
