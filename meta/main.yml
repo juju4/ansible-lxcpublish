@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: lxcpublish
   author: juju4
   description: Ansible role to publish lxc images on target server
   license: BSD
@@ -27,4 +28,3 @@ galaxy_info:
   - security
 dependencies:
   - juju4.lxd
-

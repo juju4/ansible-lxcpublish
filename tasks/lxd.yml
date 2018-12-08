@@ -12,7 +12,7 @@
       command: "lxc list"
       changed_when: false
       register: lxclist
-  when: not (lxd_host is defined and lxd_host != '' and lxd_host != 'localhost')
+  when: not (lxd_host is defined and lxd_host and lxd_host != 'localhost')
 
 - block:
     - name: list existing lxc images
@@ -26,11 +26,15 @@
       changed_when: false
       register: lxclist
       delegate_to: "{{ lxd_host }}"
-  when: lxd_host is defined and lxd_host != '' and lxd_host != 'localhost'
+  when: lxd_host is defined and lxd_host and lxd_host != 'localhost'
 
 - name: stop and publish lxc images
-  include: "lxd-stop-publish.yml imagelist={{ imagelist }} lxclist={{ lxclist }} guest={{ outer_item.guest }} publishalias={{ outer_item.publishalias }}"
+  include: >
+    lxd-stop-publish.yml
+    imagelist={{ imagelist }}
+    lxclist={{ lxclist }}
+    guest={{ outer_item.guest }}
+    publishalias={{ outer_item.publishalias }}
   with_items: "{{ lxd_publish }}"
   loop_control:
     loop_var: outer_item
-

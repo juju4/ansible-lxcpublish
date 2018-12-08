@@ -2,5 +2,4 @@
 
 - hosts: all
   roles:
-    - myrole
-
+    - juju4.lxcpublish

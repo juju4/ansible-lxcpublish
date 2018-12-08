@@ -9,7 +9,9 @@
         - "lxc publish {{ guest }} --alias {{ publishalias }}"
         - "lxc delete {{ guest }}"
       when: lxclist.stdout.find(" {{ guest }} ") != -1
-  when: imagelist.stdout.find(" {{ publishalias }} ") == -1 and not (lxd_host is defined and lxd_host != '' and lxd_host != 'localhost')
+  when: >
+    imagelist.stdout.find(" {{ publishalias }} ") == -1 and
+    not (lxd_host is defined and lxd_host != '' and lxd_host != 'localhost')
 
 - block:
     - name: stop and publish lxc instance {{ guest }}
@@ -20,5 +22,6 @@
         - "lxc delete {{ guest }}"
       delegate_to: "{{ lxd_host }}"
       when: lxclist.stdout.find(" {{ guest }} ") != -1
-  when: imagelist.stdout.find(" {{ publishalias }} ") == -1 and (lxd_host is defined and lxd_host != '' and lxd_host != 'localhost')
-
+  when: >
+    imagelist.stdout.find(" {{ publishalias }} ") == -1 and
+    (lxd_host is defined and lxd_host != '' and lxd_host != 'localhost')

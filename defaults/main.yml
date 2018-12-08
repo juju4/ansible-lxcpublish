@@ -8,4 +8,3 @@ lxd_publish: []
 #        { guest: 'default-ubuntu-1604', publishalias: 'ubuntu-16.04' },
 #        { guest: 'default-centos-7', publishalias: 'centos-7' }
 #    ]
-
