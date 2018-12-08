@@ -11,7 +11,7 @@
       when: lxclist.stdout.find(" {{ guest }} ") != -1
   when: >
     imagelist.stdout.find(" {{ publishalias }} ") == -1 and
-    not (lxd_host is defined and lxd_host != '' and lxd_host != 'localhost')
+    not (lxd_host is defined and lxd_host and lxd_host != 'localhost')
 
 - block:
     - name: stop and publish lxc instance {{ guest }}
@@ -24,4 +24,4 @@
       when: lxclist.stdout.find(" {{ guest }} ") != -1
   when: >
     imagelist.stdout.find(" {{ publishalias }} ") == -1 and
-    (lxd_host is defined and lxd_host != '' and lxd_host != 'localhost')
+    (lxd_host is defined and lxd_host and lxd_host != 'localhost')
